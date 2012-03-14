@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Group Sample</title>
+    <link rel="stylesheet" type="text/css" href="/Content/bootstrap.min.css" />
+    <style type="text/css">
+        body
+        {
+            margin-top: 60px;
+        }
+        #messages
+        {
+            margin: 0;
+            margin-top: 15px;
+        }
+        #messages li
+        {
+            list-style-type: none;
+            margin: 0;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/default.html">Foo Chat</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active"><a href="/default.html">Home</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+        <div>
+            <h2>Messages</h2>
+            <ul id="messages"></ul>
+        </div>
+
+        <div>
+            <input type="text" class="input-xxlarge search-query" id="txtMessage">
+            <button type="submit" class="btn" id="btnSend">Search</button>
+            <button type="submit" class="btn" id="btnJoinAdminsRoom">Join Admins Room</button>
+        </div>
+    </div>
+
+    <script src="/Scripts/jquery-1.6.4.min.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery.signalR.min.js" type="text/javascript"></script>
+    <script src="/signalr/hubs" type="text/javascript"></script>
+    <script type="text/javascript">
+        (function () {
+
+            var isAdmin = false;
+
+            $(function () {
+
+                var chatHub = $.connection.chat;
+
+                var $messageHolder = $("#messages");
+
+                chatHub.addMessage = function (msg, connId) {
+                    $messageHolder.append(
+                        $("<li/>").text(connId + ": " + msg)
+                    );
+                };
+
+                chatHub.announceNewcommer = function (user) {
+                    alert("Newcommer: " + user);
+                };
+
+                $("#btnSend").click(function () {
+
+                    $txt = $("#txtMessage");
+
+                    if (isAdmin)
+                        chatHub.send($txt.val(), "admins");
+                    else
+                        chatHub.send($txt.val());
+
+                    $txt.val(null);
+
+                });
+                
+                $("#btnJoinAdminsRoom").click(function () {
+                    chatHub.joinRoom("admins");
+                    isAdmin = true;
+                });
+
+                $.connection.hub.start();
+            });
+        }());
+    </script>
+</body>
+</html>
