@@ -1,4 +1,8 @@
-﻿(function () {
+﻿/// <reference path="../knockout-2.2.0.debug.js" />
+/// <reference path="../jquery-1.8.3.intellisense.js" />
+/// <reference path="../jquery.signalR-1.0.0-rc1.js" />
+
+(function () {
 
     function Message(from, msg, isPrivate) {
         this.from = ko.observable(from);

@@ -14,14 +14,13 @@ namespace ConnectionMappingSample.Hubs {
         public HashSet<string> ConnectionIds { get; set; }
     }
 
-    public class Room {
-
-        public string RoomName { get; set; }
-        public HashSet<string> Users { get; set; }
-    }
-
     [Authorize]
     public class ChatHub : Hub {
+
+        // References: 
+        // https://github.com/SignalR/SignalR/wiki/Hubs
+        // https://github.com/SignalR/Samples/blob/master/BasicChat/ChatWithTracking.cs
+        // https://github.com/davidfowl/MessengR/blob/master/MessengR/Hubs/Chat.cs
 
         private static readonly ConcurrentDictionary<string, User> Users = new ConcurrentDictionary<string, User>();
 
