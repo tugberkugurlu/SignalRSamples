@@ -28,7 +28,7 @@ namespace ConnectionMappingSample.Hubs {
         public void Send(string message) {
 
             // Gets the username from the collection by looking at the connection id.
-            // We might also get the username through the authed user
+            // We could also get the username through the authed user
             string userName = Users.FirstOrDefault(x =>
                 x.Value.ConnectionIds.Contains(
                     Context.ConnectionId, StringComparer.InvariantCultureIgnoreCase)).Key;
