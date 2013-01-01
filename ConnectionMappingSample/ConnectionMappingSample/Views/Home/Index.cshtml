@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Chat, Chat, Chat...";
+}
+
+@section head { 
+
+    <style type="text/css">
+        ul {
+            margin: 0;
+            margin-top: 10px;
+        }
+            ul li {
+                padding: 0;
+                list-style-type: none;
+            }
+
+        #messages li {
+            background-color: #EEE;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            min-height: 40px;
+            line-height: 40px;
+            padding-left: 7px;
+            padding-right: 7px;
+            margin-bottom: 1px;
+        }
+    </style>
+}
+
+@section scripts {
+    <script src="~/Scripts/jquery.signalR-1.0.0-rc1.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script src="~/Scripts/apps/chat.js"></script>
+}
+
+<h2>Chat, Chat, Chat...</h2>
+
+<div class="alert alert-success">
+    Hello @User.Identity.Name! Start chating...
+</div>
+
+<div class="row-fluid">
+    <div class="span8 form-search">
+        <input type="text" id="txtMsg" class="input-xxlarge" disabled="disabled" /> 
+        <button type="button" id="btnSend" class="btn btn-info" disabled="disabled">Send</button>
+        <ul id="messages" data-bind="foreach: messages">
+            <li>
+                <strong>
+                    <span data-bind="text: from"></span>: 
+                </strong>
+                <span data-bind="text: message"></span>
+            </li>
+        </ul>
+    </div>
+    <div id="users" class="span4">
+        <ul data-bind="foreach: users">
+            <li>
+                <span data-bind="text: $data"></span>
+            </li>
+        </ul>
+    </div>
+</div>
