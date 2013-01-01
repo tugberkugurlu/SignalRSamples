@@ -1,13 +1,40 @@
 ﻿(function () {
 
-    function Message(from, msg) {
+    function Message(from, msg, isPrivate) {
         this.from = ko.observable(from);
         this.message = ko.observable(msg);
+        this.isPrivate = ko.observable(isPrivate);
+    }
+
+    function User(name) {
+
+        var self = this;
+
+        self.name = ko.observable(name);
+        self.isPrivateChatUser = ko.observable(false);
+        self.setAsPrivateChat = function (user) {
+            viewModel.privateChatUser(user.name());
+            viewModel.isInPrivateChat(true);
+            $.each(viewModel.users(), function (i, user) {
+                user.isPrivateChatUser(false);
+            });
+            self.isPrivateChatUser(true);
+        };
     }
 
     var viewModel = {
         messages: ko.observableArray([]),
-        users: ko.observableArray([])
+        users: ko.observableArray([]),
+        isInPrivateChat: ko.observable(false),
+        privateChatUser: ko.observable(),
+        exitFromPrivateChat: function () {
+
+            viewModel.isInPrivateChat(false);
+            viewModel.privateChatUser(null);
+            $.each(viewModel.users(), function (i, user) {
+                user.isPrivateChatUser(false);
+            });
+        }
     };
 
     $(function () {
@@ -21,15 +48,19 @@
         $.connection.hub.logging = true;
 
         chatHub.client.received = function (message) {
-            viewModel.messages.push(new Message(message.sender, message.message));
+            viewModel.messages.push(new Message(message.sender, message.message, message.isPrivate));
         };
 
         chatHub.client.userConnected = function (username) {
-            viewModel.users.push(username);
+            viewModel.users.push(new User(username));
         };
 
         chatHub.client.userDisconnected = function (username) {
-            viewModel.users.pop(username);
+            viewModel.users.pop(new User(username));
+            if (viewModel.isInPrivateChat() && viewModel.privateChatUser() === username) {
+                viewModel.isInPrivateChat(false);
+                viewModel.privateChatUser(null);
+            }
         };
 
         // $.connection.hub.starting(callback)
@@ -42,10 +73,7 @@
         // });
 
         startConnection();
-
         ko.applyBindings(viewModel);
-
-        // helper functions
 
         function startConnection() {
 
@@ -56,7 +84,7 @@
 
                 chatHub.server.getConnectedUsers().done(function (users) {
                     $.each(users, function (i, username) {
-                        viewModel.users.push(username);
+                        viewModel.users.push(new User(username));
                     });
                 });
 
@@ -73,9 +101,17 @@
                 var msgValue = $msgTxt.val();
                 if (msgValue !== null && msgValue.length > 0) {
 
-                    chatHub.server.send(msgValue).fail(function (err) {
-                        console.log('Send method failed: ' + err);
-                    });
+                    if (viewModel.isInPrivateChat()) {
+
+                        chatHub.server.send(msgValue, viewModel.privateChatUser()).fail(function (err) {
+                            console.log('Send method failed: ' + err);
+                        });
+                    }
+                    else {
+                        chatHub.server.send(msgValue).fail(function (err) {
+                            console.log('Send method failed: ' + err);
+                        });
+                    }
                 }
                 e.preventDefault();
             });

@@ -27,15 +27,26 @@ namespace ConnectionMappingSample.Hubs {
 
         public void Send(string message) {
 
-            // Gets the username from the collection by looking at the connection id.
-            // We could also get the username through the authed user
-            string userName = Users.FirstOrDefault(x =>
-                x.Value.ConnectionIds.Contains(
-                    Context.ConnectionId, StringComparer.InvariantCultureIgnoreCase)).Key;
-
-            // Obviously, this sends it to the caller only (obviously!!).
+            User sender = GetUser(Context.ConnectionId);
+            
+            // Obviously, as it says Caller.name!, this sends it to the caller only (obviously!!).
             // Clients.Caller.name = userName;
-            Clients.All.Received(new { sender = userName, message = message });
+
+            // So, broadcast the sender, too.
+            Clients.All.received(new { sender = sender.Name, message = message, isPrivate = false });
+        }
+
+        public void Send(string message, string to) {
+
+            // Gets the username from the collection by looking at the connection id.
+            // We could also get the username through the authed user (Context.User.Identity.Name)
+            User sender = GetUser(Context.ConnectionId);
+            User receiver = Users.FirstOrDefault(x => x.Key.Equals(to, StringComparison.InvariantCultureIgnoreCase)).Value;
+
+            IEnumerable<string> allReceivers = receiver.ConnectionIds.Concat(sender.ConnectionIds);
+            foreach (var cid in allReceivers) {
+                Clients.Client(cid).received(new { sender = sender.Name, message = message, isPrivate = true });
+            }
         }
 
         public IEnumerable<string> GetConnectedUsers() {
@@ -108,6 +119,17 @@ namespace ConnectionMappingSample.Hubs {
             }
 
             return base.OnDisconnected();
+        }
+
+        // privates
+
+        private User GetUser(string cid) {
+
+            // Gets the user from the collection by looking at the connection id.
+            // We could also get the username through the authed user (Context.User.Identity.Name)
+            return Users.FirstOrDefault(x =>
+                x.Value.ConnectionIds.Contains(
+                    cid, StringComparer.InvariantCultureIgnoreCase)).Value;
         }
     }
 }

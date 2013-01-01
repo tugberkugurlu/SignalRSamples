@@ -7,12 +7,15 @@
     <style type="text/css">
         ul {
             margin: 0;
-            margin-top: 10px;
         }
             ul li {
                 padding: 0;
                 list-style-type: none;
             }
+
+        #messages {
+            margin-top: 10px;
+        }
 
         #messages li {
             background-color: #EEE;
@@ -24,6 +27,16 @@
             padding-left: 7px;
             padding-right: 7px;
             margin-bottom: 1px;
+        }
+        #users li {
+            border: 1px solid #EEE;
+            padding: 4px;
+            border-radius: 3px;
+            margin-bottom: 1px;
+            cursor: pointer;
+        }
+        .privateChatUser {
+            background-color: #3A87AD;
         }
     </style>
 }
@@ -40,23 +53,26 @@
     Hello @User.Identity.Name! Start chating...
 </div>
 
+<div data-bind="visible: isInPrivateChat" class="alert alert-info">
+    You are in a private chat with @@<span data-bind="text: privateChatUser"></span>! <a href="#" data-bind="click: exitFromPrivateChat">Exit from private chat?</a>
+</div>
+
 <div class="row-fluid">
     <div class="span8 form-search">
         <input type="text" id="txtMsg" class="input-xxlarge" disabled="disabled" /> 
         <button type="button" id="btnSend" class="btn btn-info" disabled="disabled">Send</button>
         <ul id="messages" data-bind="foreach: messages">
             <li>
-                <strong>
-                    <span data-bind="text: from"></span>: 
-                </strong>
+                <span class="label label-important" data-bind="visible: isPrivate">Private</span>
+                <strong><span data-bind="text: from"></span>: </strong>
                 <span data-bind="text: message"></span>
             </li>
         </ul>
     </div>
-    <div id="users" class="span4">
+    <div id="users" class="span2">
         <ul data-bind="foreach: users">
-            <li>
-                <span data-bind="text: $data"></span>
+            <li data-bind="click: setAsPrivateChat, css: { privateChatUser: isPrivateChatUser }">
+                <span data-bind="text: name"></span>
             </li>
         </ul>
     </div>
