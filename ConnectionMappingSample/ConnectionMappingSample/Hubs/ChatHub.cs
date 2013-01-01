@@ -22,7 +22,8 @@ namespace ConnectionMappingSample.Hubs {
         // https://github.com/SignalR/Samples/blob/master/BasicChat/ChatWithTracking.cs
         // https://github.com/davidfowl/MessengR/blob/master/MessengR/Hubs/Chat.cs
 
-        private static readonly ConcurrentDictionary<string, User> Users = new ConcurrentDictionary<string, User>();
+        private static readonly ConcurrentDictionary<string, User> Users 
+            = new ConcurrentDictionary<string, User>();
 
         public void Send(string message) {
 
@@ -37,8 +38,6 @@ namespace ConnectionMappingSample.Hubs {
 
         public void Send(string message, string to) {
 
-            // Gets the username from the collection by looking at the connection id.
-            // We could also get the username through the authed user (Context.User.Identity.Name)
             User sender = GetUser(Context.ConnectionId);
             User receiver = Users.FirstOrDefault(x => x.Key.Equals(to, StringComparison.InvariantCultureIgnoreCase)).Value;
 
@@ -103,9 +102,9 @@ namespace ConnectionMappingSample.Hubs {
                     User removedUser;
                     Users.TryRemove(userName, out removedUser);
 
-                    // Or you might want to only broadcast this info if this 
-                    // is the last connection of the user and the user actual is now disconnected
-                    // from all connections.
+                    // You might want to only broadcast this info if this 
+                    // is the last connection of the user and the user actual is 
+                    // now disconnected from all connections.
                     Clients.Others.userDisconnected(userName);
                 }
                 else {
@@ -113,7 +112,7 @@ namespace ConnectionMappingSample.Hubs {
                     Users.AddOrUpdate(userName, user, (n, u) => user);
                 }
 
-                // // broadcast this to all clients other than the caller
+                // // Or you may want broadcast this to all clients other than the caller
                 // Clients.AllExcept(disconnectedUserCids).userDisconnected(userName);
             }
 
