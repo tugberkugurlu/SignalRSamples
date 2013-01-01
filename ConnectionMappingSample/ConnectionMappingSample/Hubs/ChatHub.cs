@@ -62,7 +62,7 @@ namespace ConnectionMappingSample.Hubs {
             user.ConnectionIds.Add(connectionId);
             Users.AddOrUpdate(userName, user, (n, u) => user);
 
-            // // broadcast this to all clients other that the caller
+            // // broadcast this to all clients other than the caller
             // Clients.AllExcept(user.ConnectionIds.ToArray()).userConnected(userName);
 
             // Or you might want to only broadcast this info if this 
@@ -103,7 +103,7 @@ namespace ConnectionMappingSample.Hubs {
                     Users.AddOrUpdate(userName, user, (n, u) => user);
                 }
 
-                // // broadcast this to all clients other that the caller
+                // // broadcast this to all clients other than the caller
                 // Clients.AllExcept(disconnectedUserCids).userDisconnected(userName);
             }
 
