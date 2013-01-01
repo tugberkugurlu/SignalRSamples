@@ -49,8 +49,7 @@
 
         function startConnection() {
 
-            // forcing longPolling to make the login thing work. DDTAH (don't do this at home)!
-            $.connection.hub.start({ transport: 'longPolling' }).done(function () {
+            $.connection.hub.start().done(function () {
 
                 toggleInputs(false);
                 bindClickEvents();
