@@ -40,7 +40,14 @@ namespace ConnectionMappingSample.Hubs {
 
                 User sender = GetUser(Context.User.Identity.Name);
 
-                IEnumerable<string> allReceivers = receiver.ConnectionIds.Concat(sender.ConnectionIds);
+                IEnumerable<string> allReceivers;
+                lock (receiver.ConnectionIds) {
+                    lock (sender.ConnectionIds) {
+
+                        allReceivers = receiver.ConnectionIds.Concat(sender.ConnectionIds);
+                    }
+                }
+
                 foreach (var cid in allReceivers) {
                     Clients.Client(cid).received(new { sender = sender.Name, message = message, isPrivate = true });
                 }
@@ -100,17 +107,17 @@ namespace ConnectionMappingSample.Hubs {
                 lock (user.ConnectionIds) {
 
                     user.ConnectionIds.RemoveWhere(cid => cid.Equals(connectionId));
-                }
 
-                if (!user.ConnectionIds.Any()) {
+                    if (!user.ConnectionIds.Any()) {
 
-                    User removedUser;
-                    Users.TryRemove(userName, out removedUser);
+                        User removedUser;
+                        Users.TryRemove(userName, out removedUser);
 
-                    // You might want to only broadcast this info if this 
-                    // is the last connection of the user and the user actual is 
-                    // now disconnected from all connections.
-                    Clients.Others.userDisconnected(userName);
+                        // You might want to only broadcast this info if this 
+                        // is the last connection of the user and the user actual is 
+                        // now disconnected from all connections.
+                        Clients.Others.userDisconnected(userName);
+                    }
                 }
             }
 
