@@ -65,8 +65,6 @@ namespace ConnectionMappingSample.Hubs {
                 user.ConnectionIds.Add(connectionId);
             }
 
-            Users.AddOrUpdate(userName, user, (n, u) => user);
-
             // // broadcast this to all clients other than the caller
             // Clients.AllExcept(user.ConnectionIds.ToArray()).userConnected(userName);
 
@@ -104,10 +102,6 @@ namespace ConnectionMappingSample.Hubs {
                     // is the last connection of the user and the user actual is 
                     // now disconnected from all connections.
                     Clients.Others.userDisconnected(userName);
-                }
-                else {
-
-                    Users.AddOrUpdate(userName, user, (n, u) => user);
                 }
             }
 
