@@ -27,16 +27,17 @@ namespace ConnectionMappingSample.Hubs {
 
         public void Send(string message) {
 
-            User sender = GetUser(Context.ConnectionId);
+            string sender = Context.User.Identity.Name;
 
             // So, broadcast the sender, too.
-            Clients.All.received(new { sender = sender.Name, message = message, isPrivate = false });
+            Clients.All.received(new { sender = sender, message = message, isPrivate = false });
         }
 
         public void Send(string message, string to) {
 
-            User sender = GetUser(Context.ConnectionId);
-            User receiver = Users.FirstOrDefault(x => x.Key.Equals(to, StringComparison.InvariantCultureIgnoreCase)).Value;
+            User receiver;
+            Users.TryGetValue(to, out receiver);
+            User sender = GetUser(Context.User.Identity.Name);
 
             IEnumerable<string> allReceivers = receiver.ConnectionIds.Concat(sender.ConnectionIds);
             foreach (var cid in allReceivers) {
@@ -108,15 +109,12 @@ namespace ConnectionMappingSample.Hubs {
             return base.OnDisconnected();
         }
 
-        // privates
+        private User GetUser(string username) {
 
-        private User GetUser(string cid) {
+            User user;
+            Users.TryGetValue(username, out user);
 
-            // Gets the user from the collection by looking at the connection id.
-            // We could also get the username through the authed user (Context.User.Identity.Name)
-            return Users.FirstOrDefault(x =>
-                x.Value.ConnectionIds.Contains(
-                    cid, StringComparer.InvariantCultureIgnoreCase)).Value;
+            return user;
         }
     }
 }
