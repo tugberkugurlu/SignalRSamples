@@ -36,19 +36,27 @@ namespace ConnectionMappingSample.Hubs {
         public void Send(string message, string to) {
 
             User receiver;
-            Users.TryGetValue(to, out receiver);
-            User sender = GetUser(Context.User.Identity.Name);
+            if (Users.TryGetValue(to, out receiver)) {
 
-            IEnumerable<string> allReceivers = receiver.ConnectionIds.Concat(sender.ConnectionIds);
-            foreach (var cid in allReceivers) {
-                Clients.Client(cid).received(new { sender = sender.Name, message = message, isPrivate = true });
+                User sender = GetUser(Context.User.Identity.Name);
+
+                IEnumerable<string> allReceivers = receiver.ConnectionIds.Concat(sender.ConnectionIds);
+                foreach (var cid in allReceivers) {
+                    Clients.Client(cid).received(new { sender = sender.Name, message = message, isPrivate = true });
+                }
             }
         }
 
         public IEnumerable<string> GetConnectedUsers() {
 
-            return Users.Where(x => !x.Value.ConnectionIds.Contains(
-                Context.ConnectionId, StringComparer.InvariantCultureIgnoreCase)).Select(x => x.Key);
+            return Users.Where(x => {
+
+                lock (x.Value.ConnectionIds) {
+
+                    return !x.Value.ConnectionIds.Contains(Context.ConnectionId, StringComparer.InvariantCultureIgnoreCase);
+	            }
+
+            }).Select(x => x.Key);
         }
 
         public override Task OnConnected() {
@@ -64,16 +72,16 @@ namespace ConnectionMappingSample.Hubs {
             lock (user.ConnectionIds) {
 
                 user.ConnectionIds.Add(connectionId);
-            }
 
-            // // broadcast this to all clients other than the caller
-            // Clients.AllExcept(user.ConnectionIds.ToArray()).userConnected(userName);
+                // // broadcast this to all clients other than the caller
+                // Clients.AllExcept(user.ConnectionIds.ToArray()).userConnected(userName);
 
-            // Or you might want to only broadcast this info if this 
-            // is the first connection of the user
-            if (user.ConnectionIds.Count == 1) {
+                // Or you might want to only broadcast this info if this 
+                // is the first connection of the user
+                if (user.ConnectionIds.Count == 1) {
 
-                Clients.Others.userConnected(userName);
+                    Clients.Others.userConnected(userName);
+                }
             }
 
             return base.OnConnected();
