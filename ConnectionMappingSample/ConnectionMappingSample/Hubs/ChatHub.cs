@@ -23,14 +23,11 @@ namespace ConnectionMappingSample.Hubs {
         // https://github.com/davidfowl/MessengR/blob/master/MessengR/Hubs/Chat.cs
 
         private static readonly ConcurrentDictionary<string, User> Users 
-            = new ConcurrentDictionary<string, User>();
+            = new ConcurrentDictionary<string, User>(StringComparer.InvariantCultureIgnoreCase);
 
         public void Send(string message) {
 
             User sender = GetUser(Context.ConnectionId);
-            
-            // Obviously, as it says Caller.name!, this sends it to the caller only (obviously!!).
-            // Clients.Caller.name = userName;
 
             // So, broadcast the sender, too.
             Clients.All.received(new { sender = sender.Name, message = message, isPrivate = false });
@@ -57,18 +54,17 @@ namespace ConnectionMappingSample.Hubs {
 
             string userName = Context.User.Identity.Name;
             string connectionId = Context.ConnectionId;
-            User user = Users.Values.FirstOrDefault(x => x.Name.Equals(
-                Context.User.Identity.Name, StringComparison.InvariantCultureIgnoreCase));
 
-            if (user == null) {
+            var user = Users.GetOrAdd(userName, _ => new User {
+                Name = userName,
+                ConnectionIds = new HashSet<string>()
+            });
 
-                user = new User { 
-                    Name = userName, 
-                    ConnectionIds = new HashSet<string>() 
-                };
+            lock (user.ConnectionIds) {
+
+                user.ConnectionIds.Add(connectionId);
             }
 
-            user.ConnectionIds.Add(connectionId);
             Users.AddOrUpdate(userName, user, (n, u) => user);
 
             // // broadcast this to all clients other than the caller
@@ -88,14 +84,16 @@ namespace ConnectionMappingSample.Hubs {
 
             string userName = Context.User.Identity.Name;
             string connectionId = Context.ConnectionId;
-            User user = Users.Values.FirstOrDefault(x => x.Name.Equals(
-                Context.User.Identity.Name, StringComparison.InvariantCultureIgnoreCase));
             
-            string[] disconnectedUserCids;
+            User user;
+            Users.TryGetValue(userName, out user);
+            
             if (user != null) {
 
-                user.ConnectionIds.RemoveWhere(cid => cid.Equals(connectionId));
-                disconnectedUserCids = user.ConnectionIds.ToArray();
+                lock (user.ConnectionIds) {
+
+                    user.ConnectionIds.RemoveWhere(cid => cid.Equals(connectionId));
+                }
 
                 if (!user.ConnectionIds.Any()) {
 
@@ -111,9 +109,6 @@ namespace ConnectionMappingSample.Hubs {
 
                     Users.AddOrUpdate(userName, user, (n, u) => user);
                 }
-
-                // // Or you may want broadcast this to all clients other than the caller
-                // Clients.AllExcept(disconnectedUserCids).userDisconnected(userName);
             }
 
             return base.OnDisconnected();
