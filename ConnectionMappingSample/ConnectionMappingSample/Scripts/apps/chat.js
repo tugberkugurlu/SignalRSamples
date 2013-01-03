@@ -86,6 +86,8 @@
                 toggleInputs(false);
                 bindClickEvents();
 
+                $msgTxt.focus();
+
                 chatHub.server.getConnectedUsers().done(function (users) {
                     $.each(users, function (i, username) {
                         viewModel.users.push(new User(username));
@@ -100,25 +102,40 @@
 
         function bindClickEvents() {
 
+            $msgTxt.keypress(function (e) {
+                var code = (e.keyCode ? e.keyCode : e.which);
+                if (code === 13) {
+                    sendMessage();
+                }
+            });
+
             $sendBtn.click(function (e) {
 
-                var msgValue = $msgTxt.val();
-                if (msgValue !== null && msgValue.length > 0) {
-
-                    if (viewModel.isInPrivateChat()) {
-
-                        chatHub.server.send(msgValue, viewModel.privateChatUser()).fail(function (err) {
-                            console.log('Send method failed: ' + err);
-                        });
-                    }
-                    else {
-                        chatHub.server.send(msgValue).fail(function (err) {
-                            console.log('Send method failed: ' + err);
-                        });
-                    }
-                }
+                sendMessage();
                 e.preventDefault();
             });
+        }
+
+        function sendMessage() {
+
+            var msgValue = $msgTxt.val();
+            if (msgValue !== null && msgValue.length > 0) {
+
+                if (viewModel.isInPrivateChat()) {
+
+                    chatHub.server.send(msgValue, viewModel.privateChatUser()).fail(function (err) {
+                        console.log('Send method failed: ' + err);
+                    });
+                }
+                else {
+                    chatHub.server.send(msgValue).fail(function (err) {
+                        console.log('Send method failed: ' + err);
+                    });
+                }
+            }
+
+            $msgTxt.val(null);
+            $msgTxt.focus();
         }
 
         function toggleInputs(status) {
