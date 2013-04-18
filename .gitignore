@@ -110,3 +110,5 @@ UpgradeLog*.XML
 # Custom
 _docs
 artifacts
+.pubxml
+.pubxml.user
