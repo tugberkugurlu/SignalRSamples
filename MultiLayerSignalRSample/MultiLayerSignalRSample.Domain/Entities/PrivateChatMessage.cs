@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MultiLayerSignalRSample.Domain.Entities {
 
@@ -20,10 +16,7 @@ namespace MultiLayerSignalRSample.Domain.Entities {
         public string Content { get; set; }
         public DateTimeOffset ReceivedOn { get; set; }
 
-        [InverseProperty("SenderPrivateChatMessages")]
-        public User Sender { get; set; }
-
-        [InverseProperty("ReceiverPrivateChatMessages")]
-        public User Receiver { get; set; }
+        public virtual User Sender { get; set; }
+        public virtual User Receiver { get; set; }
     }
 }
