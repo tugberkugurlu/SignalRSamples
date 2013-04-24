@@ -75,9 +75,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\SignalRAutofac.cs" />
+    <Compile Include="Config\WebApiAutofac.cs" />
+    <Compile Include="Config\WebApiConfig.cs" />
+    <Compile Include="Config\WebApiRouteConfig.cs" />
+    <Compile Include="Controllers\ChatMessagesController.cs" />
     <Compile Include="Controllers\Core\HubController.cs" />
     <Compile Include="Controllers\Core\HubControllerBase.cs" />
     <Compile Include="Controllers\Core\HubControllerOfTHub.cs" />
+    <Compile Include="Formatting\SuppressedRequiredMemberSelector.cs" />
     <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
