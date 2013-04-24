@@ -40,7 +40,7 @@ namespace MultiLayerSignalRSample.Domain.Migrations
                         ReceivedOn = c.DateTimeOffset(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Users", t => t.SenderId, cascadeDelete: true)
+                .ForeignKey("dbo.Users", t => t.SenderId, cascadeDelete: false)
                 .ForeignKey("dbo.Users", t => t.ReceiverId, cascadeDelete: false)
                 .Index(t => t.SenderId)
                 .Index(t => t.ReceiverId);

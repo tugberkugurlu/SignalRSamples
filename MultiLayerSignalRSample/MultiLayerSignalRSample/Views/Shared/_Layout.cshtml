@@ -16,6 +16,7 @@
                 @if (User.Identity.IsAuthenticated) { 
                     <div class="pull-right">
                         @using (Html.BeginForm("signout", "account")) {
+                            @Html.AntiForgeryToken()
                             <input class="btn" type="submit" value="Sign Out" />
                         }
                     </div>

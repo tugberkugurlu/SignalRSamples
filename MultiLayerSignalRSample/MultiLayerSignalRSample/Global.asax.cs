@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Microsoft.AspNet.SignalR;
+using MultiLayerSignalRSample.API.Config;
 
 namespace MultiLayerSignalRSample {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -16,11 +17,12 @@ namespace MultiLayerSignalRSample {
 
         protected void Application_Start() {
 
+            SignalRAutofac.Initialize();
             RouteTable.Routes.MapHubs();
 
+            AutofacMvc.Initialize();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
     }
 }

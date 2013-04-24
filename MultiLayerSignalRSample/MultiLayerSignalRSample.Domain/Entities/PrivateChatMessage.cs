@@ -1,9 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using MultiLayerSignalRSample.Domain.Entities.Core;
 
 namespace MultiLayerSignalRSample.Domain.Entities {
 
-    public class PrivateChatMessage 
+    public class PrivateChatMessage : IEntity<int>
     {
         public int Id { get; set; }
         

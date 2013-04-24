@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using GenericRepository;
+using MultiLayerSignalRSample.Domain.Entities.Core;
 
 namespace MultiLayerSignalRSample.Domain.Entities
 {

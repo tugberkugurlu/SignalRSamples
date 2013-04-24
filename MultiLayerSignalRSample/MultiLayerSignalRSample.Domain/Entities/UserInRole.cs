@@ -1,4 +1,4 @@
-﻿using GenericRepository;
+﻿using MultiLayerSignalRSample.Domain.Entities.Core;
 
 namespace MultiLayerSignalRSample.Domain.Entities
 {

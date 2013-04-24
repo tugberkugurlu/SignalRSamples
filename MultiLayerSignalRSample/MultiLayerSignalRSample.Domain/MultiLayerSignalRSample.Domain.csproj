@@ -38,28 +38,28 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.0.0-alpha3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="GenericRepository">
-      <HintPath>..\packages\GenericRepository.0.3.1-pre01\lib\net40\GenericRepository.dll</HintPath>
-    </Reference>
-    <Reference Include="GenericRepository.EntityFramework">
-      <HintPath>..\packages\GenericRepository.EntityFramework.0.3.1-pre01\lib\net40\GenericRepository.EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Core\EntitiesContextBase.cs" />
+    <Compile Include="Entities\Core\EntityRepository.cs" />
+    <Compile Include="Entities\Core\IEntitiesContext.cs" />
+    <Compile Include="Entities\Core\IEntityRepository%271.cs" />
+    <Compile Include="Entities\Core\IEntityRepository%272.cs" />
+    <Compile Include="Entities\Core\IEntity.cs" />
+    <Compile Include="Entities\Core\IRepository.cs" />
+    <Compile Include="Entities\Extensions\QueryableExtensions.cs" />
+    <Compile Include="Entities\PaginatedList.cs" />
+    <Compile Include="RoleConstants.cs" />
     <Compile Include="Entities\ChatMessage.cs" />
-    <Compile Include="Entities\Core\AsyncEntitiesContext.cs" />
-    <Compile Include="Entities\Core\AsyncEntityRepository.cs" />
-    <Compile Include="Entities\Core\IAsyncEntitiesContext.cs" />
-    <Compile Include="Entities\Core\IAsyncEntityRepository.cs" />
+    <Compile Include="Entities\Core\ChatEntitiesContext.cs" />
     <Compile Include="Entities\Extensions\RoleRepositoryExtensions.cs" />
     <Compile Include="Entities\Extensions\UserInRoleRepositoryExtensions.cs" />
     <Compile Include="Entities\Extensions\UserRepositoryExtensions.cs" />

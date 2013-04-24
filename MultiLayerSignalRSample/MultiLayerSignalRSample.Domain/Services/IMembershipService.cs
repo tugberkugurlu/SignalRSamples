@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using GenericRepository;
 using MultiLayerSignalRSample.Domain.Entities;
 
 namespace MultiLayerSignalRSample.Domain.Services

@@ -6,7 +6,7 @@ namespace MultiLayerSignalRSample.Domain.Entities
     public static class UserInRoleRepositoryExtensions
     {
         public static bool IsUserInRole(
-            this IAsyncEntityRepository<UserInRole> userInRoleRepository,
+            this IEntityRepository<UserInRole> userInRoleRepository,
             int userId,
             int roleId)
         {

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Text;
-using GenericRepository;
 using MultiLayerSignalRSample.Domain.Entities;
 using MultiLayerSignalRSample.Domain.Entities.Core;
 
@@ -12,14 +11,14 @@ namespace MultiLayerSignalRSample.Domain.Services
 {
     public class MembershipService : IMembershipService 
     {
-        private readonly IAsyncEntityRepository<User> _userRepository;
-        private readonly IAsyncEntityRepository<Role> _roleRepository;
-        private readonly IAsyncEntityRepository<UserInRole> _userInRoleRepository;
+        private readonly IEntityRepository<User> _userRepository;
+        private readonly IEntityRepository<Role> _roleRepository;
+        private readonly IEntityRepository<UserInRole> _userInRoleRepository;
 
         public MembershipService(
-            IAsyncEntityRepository<User> userRepository,
-            IAsyncEntityRepository<Role> roleRepository,
-            IAsyncEntityRepository<UserInRole> userInRoleRepository)
+            IEntityRepository<User> userRepository,
+            IEntityRepository<Role> roleRepository,
+            IEntityRepository<UserInRole> userInRoleRepository)
         {
             _userRepository = userRepository;
             _roleRepository = roleRepository;
@@ -48,12 +47,12 @@ namespace MultiLayerSignalRSample.Domain.Services
 
         public OperationResult<UserWithRoles> CreateUser(string username, string email, string password)
         {
-            return CreateUser(username, password, email, roles: null);
+            return CreateUser(username, email, password, roles: null);
         }
 
         public OperationResult<UserWithRoles> CreateUser(string username, string email, string password, string role)
         {
-            return CreateUser(username, password, email, roles: new[] { role });
+            return CreateUser(username, email, password, roles: new[] { role });
         }
 
         public OperationResult<UserWithRoles> CreateUser(string username, string email, string password, string[] roles)
@@ -296,7 +295,7 @@ namespace MultiLayerSignalRSample.Domain.Services
                 throw new ArgumentNullException("salt");
             }
 
-            using (var sha256 = SHA256.Create())
+            using (SHA256 sha256 = SHA256.Create())
             {
                 string saltedPassword = string.Format("{0}{1}", salt, password);
                 byte[] saltedPasswordAsBytes = Encoding.UTF8.GetBytes(saltedPassword);

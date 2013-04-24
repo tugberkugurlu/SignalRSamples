@@ -8,6 +8,24 @@
 
 @using (Html.BeginForm()) {
 
-    @Html.EditorForModel()
-    <input type="submit" class="btn" value="Login" />
+    @Html.ValidationSummary()
+    @Html.AntiForgeryToken()
+    
+    <fieldset>
+        <legend>Login Form</legend>
+        <div>
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Password)
+            @Html.PasswordFor(m => m.Password)
+        </div>
+
+        <input type="submit" class="btn" value="Login" />
+    </fieldset>
 }
+
+<p>
+    You're not a registered user? You can <a href="@Url.Action("register", "account")">register here</a>.
+</p>
