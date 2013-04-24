@@ -3,16 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiLayerSignalRSample", "MultiLayerSignalRSample\MultiLayerSignalRSample.csproj", "{23A03327-08C7-4FA0-A468-03C174A4D380}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F1E7141F-86D0-4737-A3C1-FB5798311938}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiLayerSignalRSample.API", "MultiLayerSignalRSample.API\MultiLayerSignalRSample.API.csproj", "{9F84C965-DA41-4DAD-BA16-193521D5745A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiLayerSignalRSample.Domain", "MultiLayerSignalRSample.Domain\MultiLayerSignalRSample.Domain.csproj", "{45E79910-32C7-42CD-BD93-BF96619D7D3F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0D5352C6-539C-446A-B80E-5C7B67030C96}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiLayerSignalRSample.API", "MultiLayerSignalRSample.API\MultiLayerSignalRSample.API.csproj", "{9F84C965-DA41-4DAD-BA16-193521D5745A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiLayerSignalRSample.Domain", "MultiLayerSignalRSample.Domain\MultiLayerSignalRSample.Domain.csproj", "{45E79910-32C7-42CD-BD93-BF96619D7D3F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

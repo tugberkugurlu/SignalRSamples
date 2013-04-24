@@ -55,10 +55,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\ChatMessage.cs" />
     <Compile Include="Entities\Core\AsyncEntitiesContext.cs" />
     <Compile Include="Entities\Core\AsyncEntityRepository.cs" />
     <Compile Include="Entities\Core\IAsyncEntitiesContext.cs" />
     <Compile Include="Entities\Core\IAsyncEntityRepository.cs" />
+    <Compile Include="Entities\HubConnection.cs" />
+    <Compile Include="Entities\PrivateChatMessage.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
