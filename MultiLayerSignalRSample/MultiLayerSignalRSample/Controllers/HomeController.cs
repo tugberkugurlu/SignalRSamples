@@ -7,9 +7,11 @@ using System.Web.Mvc;
 namespace MultiLayerSignalRSample.Controllers {
 
     [Authorize]
-    public class HomeController : Controller {
+    public partial class HomeController : Controller
+    {
 
-        public ViewResult Index() {
+        public virtual ViewResult Index()
+        {
 
             return View();
         }

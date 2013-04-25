@@ -6,7 +6,8 @@ using MultiLayerSignalRSample.Domain.Services;
 
 namespace MultiLayerSignalRSample.Controllers {
 
-    public class AccountController : Controller {
+    public partial class AccountController : Controller
+    {
 
         private readonly IMembershipService _membershipService;
 
@@ -16,7 +17,8 @@ namespace MultiLayerSignalRSample.Controllers {
         }
 
         [HttpGet]
-        public ViewResult Login() {
+        public virtual ViewResult Login()
+        {
 
             return View();
         }
@@ -24,7 +26,8 @@ namespace MultiLayerSignalRSample.Controllers {
         [HttpPost]
         [ActionName("Login")]
         [ValidateAntiForgeryToken]
-        public ActionResult LoginPost(LoginModel loginModel) {
+        public virtual ActionResult LoginPost(LoginModel loginModel)
+        {
 
             if (ModelState.IsValid)
             {
@@ -40,7 +43,7 @@ namespace MultiLayerSignalRSample.Controllers {
         }
 
         [HttpGet]
-        public ActionResult Register()
+        public virtual ActionResult Register()
         {
             return View();
         }
@@ -48,7 +51,7 @@ namespace MultiLayerSignalRSample.Controllers {
         [HttpPost]
         [ActionName("Register")]
         [ValidateAntiForgeryToken]
-        public ActionResult RegisterPost(RegisterModel registerModel)
+        public virtual ActionResult RegisterPost(RegisterModel registerModel)
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +71,8 @@ namespace MultiLayerSignalRSample.Controllers {
         [HttpPost]
         [ActionName("SignOut")]
         [ValidateAntiForgeryToken]
-        public ActionResult SignOutPost() {
+        public virtual ActionResult SignOutPost()
+        {
 
             FormsAuthentication.SignOut();
             return RedirectToAction("index", "Home");
