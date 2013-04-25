@@ -202,6 +202,7 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\font\fontawesome-webfont.svg" />
+    <Content Include="Content\ie10mobile.css" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\toastr.css" />
@@ -211,6 +212,7 @@
     <None Include="Scripts\amplify-vsdoc.js" />
     <Content Include="Scripts\amplify.js" />
     <Content Include="Scripts\amplify.min.js" />
+    <Content Include="Scripts\app\binder.js" />
     <Content Include="Scripts\app\bootstrapper.js" />
     <Content Include="Scripts\app\boot\main.js" />
     <Content Include="Scripts\app\chat.js" />
@@ -220,8 +222,12 @@
     <Content Include="Content\font\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\Default Settings %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
+    <Content Include="Scripts\app\config.js" />
+    <Content Include="Scripts\app\connection-boot.js" />
     <Content Include="Scripts\app\ko.debug.helpers.js" />
+    <Content Include="Scripts\app\vm.chatMessages.js" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\app\vm.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\GPL-LICENSE.txt" />

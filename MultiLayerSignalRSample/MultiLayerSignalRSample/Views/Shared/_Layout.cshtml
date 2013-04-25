@@ -4,9 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    <link rel="stylesheet" href="@Links.Content.bootstrap_min_css" />
-    <link rel="stylesheet" href="@Links.Content.bootstrap_responsive_min_css" />
-    <link rel="stylesheet" href="@Links.Content.font_awesome_min_css" />
+    @Styles.Render("~/Content/css")
     @RenderSection("head", required: false)
 </head>
 <body>

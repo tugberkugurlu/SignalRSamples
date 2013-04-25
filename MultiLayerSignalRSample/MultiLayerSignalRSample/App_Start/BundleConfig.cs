@@ -6,8 +6,6 @@ namespace MultiLayerSignalRSample
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
-            // Force optimization to be on or off, regardless of web.config setting
-            //BundleTable.EnableOptimizations = false;
             bundles.UseCdn = false;
 
             // .debug.js, -vsdoc.js and .intellisense.js files 
@@ -51,16 +49,19 @@ namespace MultiLayerSignalRSample
                     "~/Scripts/toastr.js"
                 ));
 
-            // mocks
-            // bundles.Add(new ScriptBundle("~/bundles/jsmocks")
-            //     .IncludeDirectory("~/Scripts/app/mock", "*.js", searchSubdirectories: false));
-
             // All application JS files (except mocks)
             bundles.Add(new ScriptBundle("~/bundles/jsapplibs")
                 .IncludeDirectory("~/Scripts/app/", "*.js", searchSubdirectories: false));
 
             // All CSS files
-            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/toastr.css"));
+            bundles.Add(
+              new StyleBundle("~/Content/css")
+                .Include("~/Content/ie10mobile.css")
+                .Include("~/Content/bootstrap.css")
+                .Include("~/Content/bootstrap-responsive.css")
+                .Include("~/Content/font-awesome.css")
+                .Include("~/Content/toastr.css")
+              );
         }
     }
 }

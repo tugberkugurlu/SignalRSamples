@@ -11,6 +11,7 @@
         // Just register them through require.js
         define('jquery', [], function () { return root.jQuery; });
         define('ko', [], function () { return root.ko; });
+        define('signalr', [], function () { return root.jQuery.connection; });
         define('amplify', [], function () { return root.amplify; });
         define('infuser', [], function () { return root.infuser; });
         define('moment', [], function () { return root.moment; });

@@ -27,6 +27,10 @@ namespace MultiLayerSignalRSample {
             AutofacMvc.Initialize();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            // Bundle Config
+            //// Force optimization to be on or off, regardless of web.config setting
+            //BundleTable.EnableOptimizations = false;
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
     }
