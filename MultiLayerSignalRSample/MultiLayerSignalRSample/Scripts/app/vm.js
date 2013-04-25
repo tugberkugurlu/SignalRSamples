@@ -1,7 +1,8 @@
 ﻿/// <reference path="../require.js" />
-define('vm', ['vm.chatMessages'], function(chatMessages) {
+define('vm', ['vm.chatMessages', 'vm.users'], function (chatMessagesViewModel, usersViewModel) {
 
     return {
-        chatMessages: chatMessages
+        chatMessages: chatMessagesViewModel,
+        users: usersViewModel
     };
 });

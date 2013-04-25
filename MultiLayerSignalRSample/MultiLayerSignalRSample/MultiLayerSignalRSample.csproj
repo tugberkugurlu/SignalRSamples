@@ -225,6 +225,8 @@
     <Content Include="Scripts\app\config.js" />
     <Content Include="Scripts\app\connection-boot.js" />
     <Content Include="Scripts\app\ko.debug.helpers.js" />
+    <Content Include="Scripts\app\model.js" />
+    <Content Include="Scripts\app\model.user.js" />
     <Content Include="Scripts\app\vm.chatMessages.js" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\app\vm.js" />
