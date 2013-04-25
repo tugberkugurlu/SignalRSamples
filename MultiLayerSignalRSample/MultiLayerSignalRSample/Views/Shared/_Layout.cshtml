@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap-responsive.min.css" rel="stylesheet" />
-    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link rel="stylesheet" href="@Links.Content.bootstrap_min_css" />
+    <link rel="stylesheet" href="@Links.Content.bootstrap_responsive_min_css" />
+    <link rel="stylesheet" href="@Links.Content.font_awesome_min_css" />
     @RenderSection("head", required: false)
 </head>
 <body>
@@ -25,10 +25,19 @@
             </div>
         </div>
     </div>
-    <script src="~/Scripts/knockout-2.2.0.js"></script>
-    <script src="~/Scripts/jquery-1.8.3.min.js"></script>
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    @* When bundling, load in this sequence:
+    1) shivs and jQuery
+    2) 3rd party libraries
+    3) require.js
+    4) your app libraries
+    5) main.js *@
+    @Scripts.Render(
+        "~/bundles/jquery", 
+        "~/bundles/jsextlibs", 
+        "~/Scripts/require.js",
+        "~/bundles/jsapplibs",
+        "~/Scripts/app/boot/main.js"
+    )
     @RenderSection("scripts", required: false)
 </body>
 </html>
