@@ -26,7 +26,9 @@ namespace SignalRIoCScopeSample
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
             });
 
-            builder.RegisterType<Broadcaster>().As<IBroadcaster>();
+            // InstancePerLifetimeScope: This will keep the instance till it's disposed
+
+            builder.RegisterType<Broadcaster>().As<IBroadcaster>().InstancePerLifetimeScope();
             builder.RegisterType<Foo>().As<IFoo>();
             builder.RegisterType<Bar>().As<IBar>();
 
