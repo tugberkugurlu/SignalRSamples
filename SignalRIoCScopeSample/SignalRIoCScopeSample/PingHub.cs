@@ -6,6 +6,7 @@ namespace SignalRIoCScopeSample
     {
         private readonly IBar _bar;
         private readonly IFoo _foo;
+        private readonly IBroadcaster _broadcaster;
 
         public PingHub(IBar bar, IFoo foo)
         {

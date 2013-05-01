@@ -14,7 +14,8 @@ namespace SignalRIoCScopeSample
         protected void Application_Start(object sender, EventArgs e)
         {
             RouteTable.Routes.MapHubs();
-            GlobalHost.DependencyResolver = new AutofacDependencyResolver(RegisterServices(new ContainerBuilder()));
+            IContainer container = RegisterServices(new ContainerBuilder());
+            GlobalHost.DependencyResolver = new AutofacDependencyResolver(container);
         }
 
         private static IContainer RegisterServices(ContainerBuilder builder)
@@ -26,9 +27,7 @@ namespace SignalRIoCScopeSample
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
             });
 
-            // InstancePerLifetimeScope: This will keep the instance till it's disposed
-
-            builder.RegisterType<Broadcaster>().As<IBroadcaster>().InstancePerLifetimeScope();
+            builder.RegisterType<Broadcaster>().As<IBroadcaster>();
             builder.RegisterType<Foo>().As<IFoo>();
             builder.RegisterType<Bar>().As<IBar>();
 
