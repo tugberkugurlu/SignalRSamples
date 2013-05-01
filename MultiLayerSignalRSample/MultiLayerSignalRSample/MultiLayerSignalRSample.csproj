@@ -215,6 +215,7 @@
     <Content Include="Scripts\app\binder.js" />
     <Content Include="Scripts\app\bootstrapper.js" />
     <Content Include="Scripts\app\boot\main.js" />
+    <Content Include="Scripts\app\events.js" />
     <Content Include="Scripts\app\chat.js" />
     <Content Include="Content\font\fontawesome-webfont.woff" />
     <Content Include="Content\font\fontawesome-webfont.ttf" />
@@ -225,11 +226,10 @@
     <Content Include="Scripts\app\config.js" />
     <Content Include="Scripts\app\connection-boot.js" />
     <Content Include="Scripts\app\ko.debug.helpers.js" />
-    <Content Include="Scripts\app\model.js" />
-    <Content Include="Scripts\app\model.user.js" />
     <Content Include="Scripts\app\vm.chatMessages.js" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\app\vm.js" />
+    <Content Include="Scripts\app\vm.users.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\GPL-LICENSE.txt" />

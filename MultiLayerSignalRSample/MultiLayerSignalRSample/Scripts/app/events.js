@@ -1,5 +1,5 @@
 ﻿define('events', ['vm'], function (vm) {
-    
+
     var
         connectionEstablished = function () {
         },
@@ -15,7 +15,7 @@
 
         newUserConnected = function (username) {
         },
-        
+
         userDisconnected = function (username) {
         };
-})
+});
