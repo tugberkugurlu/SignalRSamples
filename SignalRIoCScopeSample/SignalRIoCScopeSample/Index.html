@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    
+    <a href="#" id="ping">Ping</a>
+    <ul id="messages"></ul>
+
+    <script src="/Scripts/jquery-1.6.4.min.js"></script>
+    <script src="Scripts/jquery.signalR-1.0.1.min.js"></script>
+    <script src="/signalr/hubs"></script>
+    <script>
+        (function() {
+
+            var hub = $.connection.pingHub,
+                $pingBtn = $('#ping'),
+                $messagesContainer = $('#messages');
+
+            hub.client.pinged = function (message) {
+                
+                $('<li>').text(message).appendTo($messagesContainer);
+            };
+
+            $.connection.hub.start().done(function () {
+
+                $pingBtn.click(function(e) {
+
+                    e.preventDefault();
+                    hub.server.ping();
+                });
+            });
+
+        }());
+    </script>
+</body>
+</html>
