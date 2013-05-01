@@ -27,12 +27,10 @@ namespace SignalRIoCScopeSample
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
             });
 
-            // With this implementation, I create a new instance of Broadcaster
-            // of every Resolve call to container which is not what I want.
-            // I wanna share the Broadcaster instance throughout the Hub invocation.
-            builder.RegisterType<Broadcaster>().As<IBroadcaster>();
-            builder.RegisterType<Foo>().As<IFoo>();
-            builder.RegisterType<Bar>().As<IBar>();
+            // The hub will create a lifetime scope manually in its constructor to resolve the IFoo and IBar services.
+            builder.RegisterType<Broadcaster>().As<IBroadcaster>().InstancePerLifetimeScope();
+            builder.RegisterType<Foo>().As<IFoo>().InstancePerLifetimeScope();
+            builder.RegisterType<Bar>().As<IBar>().InstancePerLifetimeScope();
 
             builder.Register(c => serializer).As<JsonSerializer>();
             return builder.Build();
